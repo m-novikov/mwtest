@@ -44,6 +44,7 @@ class TestSiteDetails(TestCase):
 
     def test_sites_details_uses_correct_templates(self):
         self.assertTemplateUsed(self.resp, 'sites/base.html')
+        self.assertTemplateUsed(self.resp, 'sites/table.html')
         self.assertTemplateUsed(self.resp, 'sites/details.html')
 
     def test_details_page_contains_header(self):
@@ -62,6 +63,7 @@ class TestSummaryPage(TestCase):
 
     def test_sites_list_uses_base_template(self):
         self.assertTemplateUsed(self.resp, 'sites/base.html')
+        self.assertTemplateUsed(self.resp, 'sites/table.html')
         self.assertTemplateUsed(self.resp, 'sites/summary.html')
 
     def test_details_page_contains_header(self):

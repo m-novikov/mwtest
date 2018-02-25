@@ -1,23 +1,14 @@
-{% extends 'sites/base.html' %}
+{% extends 'sites/table.html' %}
 {% block header %}
 <h1>Site Details - {{ site.name }}</h1>
 {% endblock %}
 
-{% block content %}
-    <table class="table">
-        <thead>
-            <td><strong>Date</strong></td>
-            <td><strong>A Value</strong></td>
-            <td><strong>B Value</strong></td>
-        </thead>
-        <tbody>
-            {% for rec in site.records.all %}
-            <tr>
-               <td>{{ rec.date }}</td>
-                <td>{{ rec.a_value }}</td>
-                <td>{{ rec.b_value }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% block table_body %}
+    {% for rec in site.records.all %}
+    <tr>
+       <td>{{ rec.date }}</td>
+        <td>{{ rec.a_value }}</td>
+        <td>{{ rec.b_value }}</td>
+    </tr>
+    {% endfor %}
 {% endblock %}
