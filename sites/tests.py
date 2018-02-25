@@ -26,3 +26,21 @@ class TestMainSitesList(TestCase):
     def test_sites_displayed_on_the_page(self):
         for site in models.Site.objects.all():
             self.assertContains(self.resp, site.name)
+
+
+class TestSiteDetails(TestCase):
+    fixtures = ['sites.json']
+
+    def setUp(self):
+        self.client = Client()
+        self.resp = self.client.get('/sites/1')
+
+    def test_details_path_exists(self):
+        self.assertEqual(self.resp.status_code, 200)
+
+    def test_sites_details_uses_correct_templates(self):
+        self.assertTemplateUsed(self.resp, 'sites/base.html')
+        self.assertTemplateUsed(self.resp, 'sites/details.html')
+
+    def test_details_page_contains_header(self):
+        self.assertContains(self.resp, 'Site Details - Demo Site')
