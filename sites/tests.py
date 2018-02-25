@@ -14,7 +14,7 @@ class TestMainSitesList(TestCase):
         self.assertEqual(self.resp.status_code, 200)
 
     def test_sites_list_uses_base_template(self):
-        self.assertTemplateUsed(self.resp, 'sites/base.html')
+        self.assertTemplateUsed(self.resp, 'sites/list.html')
 
     def test_sites_is_alias_for_root(self):
         resp = self.client.get('/')
@@ -26,4 +26,3 @@ class TestMainSitesList(TestCase):
     def test_sites_displayed_on_the_page(self):
         for site in models.Site.objects.all():
             self.assertContains(self.resp, site.name)
-
