@@ -11,5 +11,6 @@ def index(req):
 
 
 def site_details(req, site_id):
-    site = get_object_or_404(models.Site, pk=site_id)
+    site_qs = models.Site.objects.prefetch_related('records')
+    site = get_object_or_404(site_qs, pk=site_id)
     return render(req, 'sites/details.html', {'site': site})

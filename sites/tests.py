@@ -24,8 +24,11 @@ class TestMainSitesList(TestCase):
         self.assertEqual(3, models.Site.objects.count())
 
     def test_sites_displayed_on_the_page(self):
+        template = '<a href="/sites/%s">%s</a>'
+
         for site in models.Site.objects.all():
-            self.assertContains(self.resp, site.name)
+            site_link = template % (site.id, site.name)
+            self.assertContains(self.resp, site_link)
 
 
 class TestSiteDetails(TestCase):
