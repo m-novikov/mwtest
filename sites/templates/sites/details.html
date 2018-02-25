@@ -7,8 +7,8 @@
     {% for rec in site.records.all %}
     <tr>
        <td>{{ rec.date }}</td>
-        <td>{{ rec.a_value }}</td>
-        <td>{{ rec.b_value }}</td>
+        <td>{{ rec.a_value|floatformat:2 }}</td>
+        <td>{{ rec.b_value|floatformat:2 }}</td>
     </tr>
     {% endfor %}
 {% endblock %}

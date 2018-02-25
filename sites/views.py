@@ -20,3 +20,8 @@ def site_details(req, site_id):
 def site_summary(req):
     sites_qs = models.Site.objects.all().with_sums()
     return render(req, 'sites/summary.html', {'sites': sites_qs})
+
+
+def site_summary_average(req):
+    sites_qs = models.Site.objects.all().with_avgs()
+    return render(req, 'sites/summary.html', {'sites': sites_qs})

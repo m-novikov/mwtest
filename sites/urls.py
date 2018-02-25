@@ -7,4 +7,5 @@ urlpatterns = [
     path('sites', views.index, name='site-list'),
     path('sites/<int:site_id>', views.site_details, name='site-details'),
     path('summary', views.site_summary, name='site-summary'),
+    path('summary-average', views.site_summary_average, name='site-summary-average'),
 ]

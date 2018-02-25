@@ -1,14 +1,20 @@
 {% extends 'sites/table.html' %}
 {% block header %}
 <h1>Summary</h1>
+<a href="{% url 'site-summary' %}">
+    <button type="button" class="btn btn-primary active">Sum</button>
+</a>
+<a href="{% url 'site-summary-average' %}">
+    <button type="button" class="btn btn-primary">Average</button>
+</a>
 {% endblock %}
 
 {% block table_body %}
     {% for site in sites %}
     <tr>
         <td>{{ site.name }}</td>
-        <td>{{ site.a_value }}</td>
-        <td>{{ site.b_value }}</td>
+        <td>{{ site.a_value|floatformat:2 }}</td>
+        <td>{{ site.b_value|floatformat:2 }}</td>
     </tr>
     {% endfor %}
 {% endblock %}
