@@ -1,0 +1,15 @@
+{% extends 'sites/base.html' %}
+
+{% block content %}
+<table class="table">
+    <thead>
+    <td><strong>Date</strong></td>
+    <td><strong>A Value</strong></td>
+    <td><strong>B Value</strong></td>
+    </thead>
+    <tbody>
+    {% block table_body %}
+    {% endblock %}
+    </tbody>
+</table>
+{% endblock %}

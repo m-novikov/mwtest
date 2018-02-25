@@ -1,0 +1,14 @@
+{% extends 'sites/table.html' %}
+{% block header %}
+<h1>Summary</h1>
+{% endblock %}
+
+{% block table_body %}
+    {% for site in sites %}
+    <tr>
+        <td>{{ site.name }}</td>
+        <td>{{ site.a_value }}</td>
+        <td>{{ site.b_value }}</td>
+    </tr>
+    {% endfor %}
+{% endblock %}
