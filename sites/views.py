@@ -1,27 +1,81 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Sum
+from django import urls
+from django.views import generic as generic_views
 
 from . import models
 
+
+class Navigation:
+    def __init__(self, name, paths):
+        if not paths:
+            raise ValueError('At least one path should be provided')
+
+        self.name = name
+        self.paths = paths
+
+    def matches(self, path):
+        return path in self.paths
+
+    @property
+    def path(self):
+        return self.paths[0]
+
+    def __repr__(self):
+        return '%s<name:%s, path:%s>' % (
+            type(self).__name__,
+            self.name,
+            self.path
+    )
+
+
+
 # Create your views here.
-
-def index(req):
-    return render(req, 'sites/list.html', {
-        'sites': models.Site.objects.all().iterator()
-    })
-
-
-def site_details(req, site_id):
-    site_qs = models.Site.objects.prefetch_related('records')
-    site = get_object_or_404(site_qs, pk=site_id)
-    return render(req, 'sites/details.html', {'site': site})
+MAIN_NAV = [
+    Navigation('Sites', [
+        urls.reverse_lazy('site-list'), urls.reverse_lazy('home')
+    ]),
+    Navigation('Summary', [
+        urls.reverse_lazy('site-summary'),
+        urls.reverse_lazy('site-summary-average'),
+    ])
+]
 
 
-def site_summary(req):
-    sites_qs = models.Site.objects.all().with_sums()
-    return render(req, 'sites/summary.html', {'sites': sites_qs})
+SUMMARY_NAV = [
+    Navigation('Sum', [
+        urls.reverse_lazy('site-summary')
+    ]),
+    Navigation('Average', [
+        urls.reverse_lazy('site-summary-average')
+    ])
+]
 
 
-def site_summary_average(req):
-    sites_qs = models.Site.objects.all().with_avgs()
-    return render(req, 'sites/summary.html', {'sites': sites_qs})
+class ViewMixin:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['main_nav'] = MAIN_NAV
+        context['summary_nav'] = SUMMARY_NAV
+        return context
+
+
+class SiteListView(ViewMixin, generic_views.ListView):
+    model = models.Site
+    context_object_name = 'sites'
+    template_name = 'sites/list.html'
+
+
+class SiteDetailsView(ViewMixin, generic_views.DetailView):
+    queryset = models.Site.objects.prefetch_related('records')
+    template_name = 'sites/details.html'
+    context_object_name = 'site'
+
+
+class SiteSummaryView(ViewMixin, generic_views.ListView):
+    queryset = models.Site.objects.all().with_sums()
+    template_name = 'sites/summary.html'
+    context_object_name = 'sites'
+
+class SiteSummaryAvgView(SiteSummaryView):
+    queryset = models.Site.objects.all().with_avgs()

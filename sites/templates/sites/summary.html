@@ -1,12 +1,12 @@
 {% extends 'sites/table.html' %}
 {% block header %}
 <h1>Summary</h1>
-<a href="{% url 'site-summary' %}">
-    <button type="button" class="btn btn-primary active">Sum</button>
-</a>
-<a href="{% url 'site-summary-average' %}">
-    <button type="button" class="btn btn-primary">Average</button>
-</a>
+{% for nav in summary_nav %}
+    <a href="{{nav.path}}">
+        <button type="button"
+                class="btn btn-primary {% if request.path in nav.paths %}active{% endif %}">{{nav.name}}</button>
+    </a>
+{% endfor %}
 {% endblock %}
 
 {% block table_body %}
