@@ -1,5 +1,3 @@
-from django.shortcuts import render, get_object_or_404
-from django.db.models import Sum
 from django import urls
 from django.views import generic as generic_views
 
@@ -14,9 +12,6 @@ class Navigation:
         self.name = name
         self.paths = paths
 
-    def matches(self, path):
-        return path in self.paths
-
     @property
     def path(self):
         return self.paths[0]
@@ -26,11 +21,9 @@ class Navigation:
             type(self).__name__,
             self.name,
             self.path
-    )
+        )
 
 
-
-# Create your views here.
 MAIN_NAV = [
     Navigation('Sites', [
         urls.reverse_lazy('site-list'), urls.reverse_lazy('home')
@@ -76,6 +69,7 @@ class SiteSummaryView(ViewMixin, generic_views.ListView):
     queryset = models.Site.objects.all().with_sums()
     template_name = 'sites/summary.html'
     context_object_name = 'sites'
+
 
 class SiteSummaryAvgView(SiteSummaryView):
     queryset = models.Site.objects.all().with_avgs()

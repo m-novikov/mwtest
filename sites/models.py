@@ -18,6 +18,7 @@ class SiteQueryset(models.QuerySet):
             'GROUP BY site.id '
         )
 
+
 class Site(models.Model):
     name = models.CharField(verbose_name='Name', max_length=50)
 

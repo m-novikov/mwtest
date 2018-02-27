@@ -86,7 +86,6 @@ class TestAggregationMethods(TestCase):
             self.assertAlmostEqual(expected['a_value'], site.a_value)
             self.assertAlmostEqual(expected['b_value'], site.b_value)
 
-
     def test_avg_aggregation(self):
         sites = models.Site.objects.with_avgs()
         expected_by_id = {
@@ -99,4 +98,3 @@ class TestAggregationMethods(TestCase):
             expected = expected_by_id[site.id]
             self.assertAlmostEqual(expected['a_value'], site.a_value, places=2)
             self.assertAlmostEqual(expected['b_value'], site.b_value, places=2)
-
