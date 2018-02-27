@@ -38,3 +38,6 @@ class Record(models.Model):
 
     def __str__(self):
         return '%s %s' % (self.site, self.date)
+
+    class Meta:
+        index_together = ('site', 'a_value', 'b_value')
